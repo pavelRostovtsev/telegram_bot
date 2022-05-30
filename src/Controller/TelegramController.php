@@ -28,4 +28,12 @@ class TelegramController extends AbstractController
         $response =  $command->sendMessage('helloWord', '886485500');
         return $this->json($response->getStatusCode());
     }
+
+    /**
+     * @Route("/test", name="app_test")
+     */
+    public function test(): JsonResponse
+    {
+        return $this->json('hello');
+    }
 }
