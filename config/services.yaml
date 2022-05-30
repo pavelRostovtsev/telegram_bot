@@ -1,0 +1,41 @@
+parameters:
+
+services:
+
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    _instanceof:
+        App\Services\telegram\Commands\TelegramCommandInterface:
+            tags: [ 'app.telegram.commands' ]
+
+    app.telegram.commands.service:
+        class: App\Services\telegram\Services\CommandService
+        arguments:
+            $commands: !tagged_iterator app.telegram.commands
+
+    App\Controller\TelegramController:
+        arguments:
+            $commandService: '@app.telegram.commands.service'
+
+    app.telegram.http_client_factory:
+        class: App\Services\telegram\Factory\HttpClientFactoryTelegram
+        arguments:
+            $token: '%env(TELEGRAM_TOKEN)%'
+            $telegramUrl: '%env(TELEGRAM_URL)%'
+
+    app.telegram.http_client:
+        class: GuzzleHttp\Client
+        factory: ['@app.telegram.http_client_factory', 'createHttpClient']
+
+    App\Services\telegram\Commands\TestTelegramCommand:
+        arguments:
+            $client: '@app.telegram.http_client'
