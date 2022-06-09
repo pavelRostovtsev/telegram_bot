@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
 
-make build-backend-dev
+#make build-backend-dev
 
 exec "$@"
