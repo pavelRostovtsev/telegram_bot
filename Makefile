@@ -15,3 +15,7 @@ composer-dev:
 
 code-style:
 	vendor/bin/php-cs-fixer fix -vvv  --dry-run
+
+test:
+	$(GROUP_ID)
+	$(USER_ID)
