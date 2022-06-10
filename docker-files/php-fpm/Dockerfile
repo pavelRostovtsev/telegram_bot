@@ -1,7 +1,7 @@
 FROM php:8.0-fpm-alpine
 
-ARG USER_ID=1000
-ARG GROUP_ID=1000
+ARG USER_ID=1002
+ARG GROUP_ID=1002
 ARG USER=www-data
 ARG GROUP=www-data
 
