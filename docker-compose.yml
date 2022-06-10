@@ -6,8 +6,8 @@ services:
       context: .
       dockerfile: docker-files/php-fpm/Dockerfile
       args:
-        UID: "${USER_ID}"
-        GID: "${GROUP_ID}"
+        UID: 1002
+        GID: 1002
     stdin_open: true
     tty: true
     volumes:
