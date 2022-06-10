@@ -38,7 +38,7 @@ class TelegramController extends AbstractController
     }
 
     /**
-     * @Route("/test", name="app_test")
+     * @Route("/naste", name="app_test")
      */
     public function naste(): JsonResponse
     {
