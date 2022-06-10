@@ -1,9 +1,15 @@
 FROM php:8.0-fpm-alpine
 
-ARG USER_ID=1002
-ARG GROUP_ID=1002
+ARG USER_ID
+ARG GROUP_ID
 ARG USER=www-data
 ARG GROUP=www-data
+
+ENV USER_ID=1002
+ENV GROUP_ID=1002
+ENV USER=www-data
+ENV GROUP=www-data
+
 
 WORKDIR /var/www
 

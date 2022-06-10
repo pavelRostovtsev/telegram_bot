@@ -34,14 +34,6 @@ class TelegramController extends AbstractController
      */
     public function test(): JsonResponse
     {
-        return $this->json('макс руинер шо пизда');
-    }
-
-    /**
-     * @Route("/naste", name="app_test")
-     */
-    public function naste(): JsonResponse
-    {
-        return $this->json('i love y');
+        return $this->json('');
     }
 }
