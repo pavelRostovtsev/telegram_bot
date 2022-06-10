@@ -5,7 +5,7 @@ COMPOSER = composer
 
 #запуск docker-compose
 docker-compose-go:
-	USER_ID=$(USER_ID) GROUP_ID=$(GROUP_ID) COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up -d --build
+	USER_ID=$(USER_ID) GROUP_ID=$(GROUP_ID) COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up --build
 
 docker-compose-go-d:
 	USER_ID=$(USER_ID) GROUP_ID=$(GROUP_ID) COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up -d --build
