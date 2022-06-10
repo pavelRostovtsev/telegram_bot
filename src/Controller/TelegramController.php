@@ -34,6 +34,6 @@ class TelegramController extends AbstractController
      */
     public function test(): JsonResponse
     {
-        return $this->json('hello');
+        return $this->json('макс руинер шо пизда');
     }
 }
