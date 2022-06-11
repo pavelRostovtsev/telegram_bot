@@ -31,7 +31,7 @@ services:
       - nginx
     container_name: certbot
     volumes:
-      - etc-letsencrypt:/etc/letsencrypt
+      - etc/letsencrypt:/etc/letsencrypt
       - ./public:/var/www/public
     command: certonly --webroot --webroot-path=/var/www/html --email zavet199912@gmail.ru --agree-tos --no-eff-email -d pavel-rostovtsev.ru
 
