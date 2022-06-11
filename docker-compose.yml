@@ -20,8 +20,10 @@ services:
     tty: true
     volumes:
       - ./public:/var/www/public
+      - /etc/letsencrypt/:/etc/letsencrypt/
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - php-fpm
 
@@ -31,7 +33,7 @@ services:
       - nginx
     container_name: certbot
     volumes:
-      - etc/letsencrypt:/etc/letsencrypt
+      - /etc/letsencrypt/:/etc/letsencrypt/
       - ./public:/var/www/public
     command: certonly --webroot --webroot-path=/var/www/html --email zavet199912@gmail.ru --agree-tos --no-eff-email -d pavel-rostovtsev.ru
 
