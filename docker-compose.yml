@@ -25,6 +25,16 @@ services:
     depends_on:
       - php-fpm
 
+  certbot:
+    image: certbot/certbot
+    depends_on:
+      - nginx
+    container_name: certbot
+    volumes:
+      - etc-letsencrypt:/etc/letsencrypt
+      - ./public:/var/www/public
+    command: certonly --webroot --webroot-path=/var/www/html --email zavet199912@gmail.ru --agree-tos --no-eff-email -d pavel-rostovtsev.ru
+
   postgres:
     image: postgres:9.6-alpine
     container_name: postgres
