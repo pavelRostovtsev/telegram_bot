@@ -1,17 +1,17 @@
 version: '3.8'
 
 services:
-  php-fpm:
-    build:
-      context: .
-      dockerfile: docker-files/php-fpm/Dockerfile
-      args:
-        UID: "${USER_ID}"
-        GID: "${GROUP_ID}"
-    stdin_open: true
-    tty: true
-    volumes:
-      - .:/var/www
+#  php-fpm:
+#    build:
+#      context: .
+#      dockerfile: docker-files/php-fpm/Dockerfile
+#      args:
+#        UID: "${USER_ID}"
+#        GID: "${GROUP_ID}"
+#    stdin_open: true
+#    tty: true
+#    volumes:
+#      - .:/var/www
 
   nginx:
     build:
@@ -23,19 +23,15 @@ services:
       - ./public:/var/www/public
     ports:
       - "80:80"
-      - "443:443"
     depends_on:
       - php-fpm
-
-  certbot:
-    image: certbot/certbot
-
-  postgres:
-    image: postgres:9.6-alpine
-    container_name: postgres
-    environment:
-      POSTGRES_USER: db_user
-      POSTGRES_PASSWORD: db_password
-      POSTGRES_DB: game
-    ports:
-      - '5432:5432'
+#
+#  postgres:
+#    image: postgres:9.6-alpine
+#    container_name: postgres
+#    environment:
+#      POSTGRES_USER: db_user
+#      POSTGRES_PASSWORD: db_password
+#      POSTGRES_DB: game
+#    ports:
+#      - '5432:5432'
