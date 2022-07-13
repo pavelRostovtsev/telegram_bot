@@ -8,6 +8,8 @@
 /public/bundles/
 /var/
 /vendor/
+/data
+/init-letsencrypt.sh
 .idea
 ###< symfony/framework-bundle ###
 
