@@ -21,8 +21,8 @@ services:
     tty: true
     volumes:
       - ./public:/var/www/public
-      - ./docker-files/nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
     ports:
       - "80:80"
       - "443:443"
@@ -34,8 +34,7 @@ services:
     image: certbot/certbot
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
-      - ./public:/var/www/public
-      - ./data/certbot/logs:/var/log/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
 
   postgres:
     image: postgres:9.6-alpine
@@ -46,6 +45,3 @@ services:
       POSTGRES_DB: game
     ports:
       - '5432:5432'
-
-volumes:
-  etc-letsencrypt:

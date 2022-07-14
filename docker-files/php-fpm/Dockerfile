@@ -5,8 +5,8 @@ ARG GROUP_ID
 ARG USER=www-data
 ARG GROUP=www-data
 
-ENV USER_ID=1002
-ENV GROUP_ID=1002
+ENV USER_ID=1000
+ENV GROUP_ID=1000
 ENV USER=www-data
 ENV GROUP=www-data
 
@@ -42,8 +42,6 @@ RUN set -xe \
     && chown -R $USER:$USER .
 
 USER $USER
-
-RUN wget https://get.symfony.com/cli/installer -O - | bash
 
 ENTRYPOINT ["/entrypoint.sh"]
 
