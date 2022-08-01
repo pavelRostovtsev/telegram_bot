@@ -18,20 +18,24 @@ class TelegramController extends AbstractController
         $this->commandService = $commandService;
     }
 
-    /**
-     * @Route("/telegram", name="app_telegram")
-     * @throws GuzzleException
-     */
-    public function index(): JsonResponse
+    #[Route('/path', name: 'indexAction')]
+    public function indexAction(): JsonResponse
     {
         $command = $this->commandService->getCommand('TestTelegramCommand');
         $response =  $command->sendMessage('helloWord', '886485500');
         return $this->json($response->getStatusCode());
     }
 
-    /**
-     * @Route("/test", name="app_test")
-     */
+    #[Route('/webhook', name: 'webhookAction')]
+    public function webhoockAction(): JsonResponse
+    {
+        $command = $this->commandService->getCommand('TestTelegramCommand');
+        $response =  $command->initWebHook();
+        return new JsonResponse(true);
+    }
+
+
+    #[Route('/test', name: 'app_test')]
     public function test(): JsonResponse
     {
         return $this->json('Maks ruina');

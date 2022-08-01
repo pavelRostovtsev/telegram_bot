@@ -13,18 +13,18 @@ class HttpGuzzleClientFactoryTest extends TestCase
     public function test_http_guzzle_client_factory_checking_returned_object(): void
     {
         $client = $this->getFactory()->createHttpClient();
-        $this->assertInstanceOf('GuzzleHttp\Client', $client);
+        $this->assertInstanceOf(Client::class, $client);
     }
 
     /**
      * @throws ReflectionException
      */
-    public function test_http_guzzle_client_factory_checking_base_uri()
+    public function test_http_guzzle_client_factory_checking_base_uri(): void
     {
         $client = $this->getFactory()->createHttpClient();
         $baseUri = $this->getClientBaseUri($client);
 
-        $this->assertTrue(implode($this->getFactoryConfig()) . '/' === $baseUri);
+        $this->assertSame(implode($this->getFactoryConfig()) . '/', $baseUri);
     }
 
     private function getFactory(): HttpClientFactoryTelegram

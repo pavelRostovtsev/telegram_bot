@@ -26,21 +26,14 @@ class TestTelegramCommand implements TelegramCommandInterface
             'form_params' => [
                 'chat_id' => $chatId,
                 'text' => $text,
-                'parse_mode'
             ]
         ]);
     }
-//нужно разобраться как газл шлет файлы https://qna.habr.com/q/827583
-//    public function sendDocument(string $text, resource $document)
-//    {
-//        return $this->client->post('sendDocument', [
-//            'form_params' => [
-//                'chat_id' => $chatId,
-//                'document' => $document,
-//
-//            ]
-//        ]);
-//    }
+
+    public function initWebHook(): ResponseInterface
+    {
+        return $this->client->post('setWebhook/url=https://pavel-rostovtsev.ru/test');
+    }
 
     public function getName(): string
     {
