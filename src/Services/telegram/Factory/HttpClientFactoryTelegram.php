@@ -18,9 +18,9 @@ class HttpClientFactoryTelegram
     }
 
     public function createHttpClient(): Client
-    {dd($this->telegramUrl . $this->token);die;
+    {
         return new Client([
-            'base_uri' => $this->telegramUrl . $this->token . '/'
+            'base_uri' => $this->telegramUrl . $this->token . '/',
         ]);
     }
 }

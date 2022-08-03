@@ -4,36 +4,30 @@ namespace App\Controller;
 
 use App\Services\telegram\Services\CommandService;
 use GuzzleHttp\Exception\GuzzleException;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TelegramController extends AbstractController
 {
 
     private CommandService $commandService;
+    private LoggerInterface $logger;
 
-    public function __construct(CommandService $commandService)
+    public function __construct(CommandService $commandService, LoggerInterface $logger)
     {
         $this->commandService = $commandService;
+        $this->logger = $logger;
     }
 
-    #[Route('/path', name: 'indexAction')]
-    public function indexAction(): JsonResponse
+    #[Route('/webhook', name: 'webhookAction', methods: 'POST')]
+    public function webhookAction(Request $request): JsonResponse
     {
-        $command = $this->commandService->getCommand('TestTelegramCommand');
-        $response =  $command->sendMessage('helloWord', '886485500');
-        return $this->json($response->getStatusCode());
+        $this->logger->info((string)$request->request->all(), 'telegram');
+        return new JsonResponse('kek', 200);
     }
-
-    #[Route('/webhook', name: 'webhookAction')]
-    public function webhoockAction(): JsonResponse
-    {
-        $command = $this->commandService->getCommand('TestTelegramCommand');
-        $response =  $command->initWebHook();
-        return new JsonResponse(true);
-    }
-
 
     #[Route('/test', name: 'app_test')]
     public function test(): JsonResponse

@@ -30,9 +30,24 @@ class TestTelegramCommand implements TelegramCommandInterface
         ]);
     }
 
-    public function initWebHook(): ResponseInterface
+    /**
+     * @throws GuzzleException
+     */
+    public function setWebhook(): ResponseInterface
     {
-        return $this->client->post('setWebhook/url=https://pavel-rostovtsev.ru/test');
+        return $this->client->post('setWebhook?url=https://pavel-rostovtsev.ru/webhook', [
+            'multipart' => [
+                'certificate' => fopen('docker-files/nginx/fullchain.pem', 'r')
+            ]
+        ]);
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function getWebhookInfo(): ResponseInterface
+    {
+        return $this->client->get('getWebhookInfo?');
     }
 
     public function getName(): string
