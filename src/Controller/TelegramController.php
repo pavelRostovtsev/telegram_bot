@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use App\Services\telegram\DTO\TelegramDTO;
 use App\Services\telegram\Services\CommandService;
-use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,14 +19,19 @@ class TelegramController extends AbstractController
     public function __construct(CommandService $commandService, LoggerInterface $logger)
     {
         $this->commandService = $commandService;
+//        перенести logger мб?
+//        запили асинхронность
         $this->logger = $logger;
     }
+
 
     #[Route('/webhook', name: 'webhookAction', methods: 'POST')]
     public function webhookAction(Request $request): JsonResponse
     {
-        $this->logger->info((string)$request->request->all(), 'telegram');
-        return new JsonResponse('kek', 200);
+        $data = new TelegramDTO($request);
+        $command = $this->commandService->getCommand($data->getCommand());
+        $command->start($data);
+        return new JsonResponse();
     }
 
     #[Route('/test', name: 'app_test')]
