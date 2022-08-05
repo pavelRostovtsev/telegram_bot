@@ -20,7 +20,7 @@ class BaseTelegramCommand
     /**
      * @throws GuzzleException
      */
-    protected function sendMessage(string $text, int $chatId): ResponseInterface
+    public function sendMessage(string $text, int $chatId): ResponseInterface
     {
         return $this->client->post('sendMessage', [
             'form_params' => [

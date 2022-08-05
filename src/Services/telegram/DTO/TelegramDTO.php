@@ -26,7 +26,7 @@ class TelegramDTO
         return $this->telegramDataRequest['message']['from']['id'];
     }
 
-    public function getFullText()
+    public function getFullTextCommand()
     {
         return $this->telegramDataRequest['message']['text'];
     }
@@ -43,6 +43,6 @@ class TelegramDTO
 
     private function getFullDataCommand(): array
     {
-        return explode(' ', $this->getFullText());
+        return explode(' ', $this->getFullTextCommand());
     }
 }

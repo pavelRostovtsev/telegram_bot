@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Services\telegram\DTO\TelegramDTO;
-use App\Services\telegram\Exceptions\CommandNotFoundException;
 use App\Services\telegram\Exceptions\TelegramCommandNotFoundException;
 use App\Services\telegram\Services\CommandService;
 use Psr\Log\LoggerInterface;
@@ -14,16 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TelegramController extends AbstractController
 {
-
     private CommandService $commandService;
-    private LoggerInterface $logger;
 
     public function __construct(CommandService $commandService, LoggerInterface $logger)
     {
         $this->commandService = $commandService;
-//        перенести logger мб?
-//        запили асинхронность
-        $this->logger = $logger;
     }
 
 
@@ -35,7 +29,8 @@ class TelegramController extends AbstractController
         try {
             $command = $this->commandService->getCommand($data->getCommand());
         } catch (TelegramCommandNotFoundException) {
-            $this->logger->alert('Command' . $data->getCommand() .'Not Found', );
+            $this->commandService->sendMessageCommandNotFound($data->getUserId(), $data->getFullTextCommand());
+
             return new JsonResponse(400);
         }
 
