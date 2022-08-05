@@ -16,6 +16,11 @@ class TelegramDTO
         $this->telegramDataRequest = json_decode($request->getContent(), true, 512, JSON_UNESCAPED_UNICODE);
     }
 
+    public function getFullData()
+    {
+        return $this->telegramDataRequest;
+    }
+
     public function getUserId(): int
     {
         return $this->telegramDataRequest['message']['from']['id'];
@@ -40,5 +45,4 @@ class TelegramDTO
     {
         return explode(' ', $this->getFullText());
     }
-
 }

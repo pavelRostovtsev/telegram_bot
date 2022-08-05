@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Services\telegram\DTO\TelegramDTO;
+use App\Services\telegram\Exceptions\CommandNotFoundException;
+use App\Services\telegram\Exceptions\TelegramCommandNotFoundException;
 use App\Services\telegram\Services\CommandService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,8 +31,16 @@ class TelegramController extends AbstractController
     public function webhookAction(Request $request): JsonResponse
     {
         $data = new TelegramDTO($request);
-        $command = $this->commandService->getCommand($data->getCommand());
+
+        try {
+            $command = $this->commandService->getCommand($data->getCommand());
+        } catch (TelegramCommandNotFoundException) {
+            $this->logger->alert('Command' . $data->getCommand() .'Not Found', );
+            return new JsonResponse(400);
+        }
+
         $command->start($data);
+
         return new JsonResponse();
     }
 
