@@ -43,3 +43,5 @@ services:
     App\Services\telegram\Commands\BaseTelegramCommand:
         arguments:
             $client: '@app.telegram.http_client'
+
+    App\Services\telegram\Commands\StartTelegramCommand: ~

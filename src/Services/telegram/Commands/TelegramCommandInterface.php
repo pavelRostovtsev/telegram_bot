@@ -8,5 +8,5 @@ interface TelegramCommandInterface
 {
     public function getName(): string;
 
-    public function start(TelegramDTO $data);
+    public function start(TelegramDTO $data): void;
 }

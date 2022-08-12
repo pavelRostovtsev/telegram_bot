@@ -28,6 +28,7 @@ class TelegramController extends AbstractController
 
         try {
             $command = $this->commandService->getCommand($data->getCommand());
+
         } catch (TelegramCommandNotFoundException) {
             $this->commandService->sendMessageCommandNotFound($data->getUserId(), $data->getFullTextCommand());
 

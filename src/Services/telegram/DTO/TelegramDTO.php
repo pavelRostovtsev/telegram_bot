@@ -21,6 +21,21 @@ class TelegramDTO
         return $this->telegramDataRequest;
     }
 
+    public function getUserFirstName()
+    {
+        return  $this->telegramDataRequest['message']['chat']['first_name'];
+    }
+
+    public function getUserLastName()
+    {
+        return  $this->telegramDataRequest['message']['chat']['last_name'];
+    }
+
+    public function getUserName()
+    {
+        return  $this->telegramDataRequest['message']['chat']['username'];
+    }
+
     public function getUserId(): int
     {
         return $this->telegramDataRequest['message']['from']['id'];

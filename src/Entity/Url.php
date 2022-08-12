@@ -52,12 +52,12 @@ class Url
         return $this;
     }
 
-    public function getUserId(): ?TelegramUser
+    public function getUserId(): TelegramUser
     {
         return $this->user_id;
     }
 
-    public function setUserId(?TelegramUser $user_id): self
+    public function setUserId(TelegramUser $user_id): self
     {
         $this->user_id = $user_id;
 

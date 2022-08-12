@@ -20,6 +20,9 @@ class TelegramUser
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastName = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $username = null;
+
     #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Url::class)]
     private Collection $urls;
 
@@ -45,9 +48,21 @@ class TelegramUser
         return $this->firstName;
     }
 
+    public function getUserName(): ?string
+    {
+        return $this->username ;
+    }
+
     public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function setUsername(?string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }

@@ -38,7 +38,7 @@ class CommandService
      */
     public function getCommand(string $commandName): TelegramCommandInterface
     {
-        if (!in_array($commandName, $this->commands, true)) {
+        if (!array_key_exists($commandName, $this->commands)) {
             throw new TelegramCommandNotFoundException();
         }
 
@@ -69,7 +69,7 @@ class CommandService
     public function sendMessageCommandNotFound(int $id, string $command): void
     {
         try {
-            $this->baseTelegramCommand->sendMessage('command' . $command . 'not found', $id);
+            $this->baseTelegramCommand->sendMessage('command ' . $command . ' not found', $id);
         } catch (GuzzleException $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
