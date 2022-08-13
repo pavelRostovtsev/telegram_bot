@@ -6,6 +6,7 @@ namespace App\Services\telegram\Commands;
 
 use App\Entity\Url;
 use App\Repository\TelegramUserRepository;
+use App\Repository\UrlRepository;
 use App\Services\telegram\DTO\TelegramDTO;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,14 +16,14 @@ use GuzzleHttp\Client;
 class SetUrlTelegramCommand extends BaseTelegramCommand implements TelegramCommandInterface
 {
     private TelegramUserRepository $telegramUser;
-    private EntityManagerInterface $entityManager;
+    private UrlRepository $urlRepository;
 
-    public function __construct(Client $client, TelegramUserRepository $telegramUser, EntityManagerInterface $entityManager)
+    public function __construct(Client $client, TelegramUserRepository $telegramUser, UrlRepository $urlRepository)
     {
         parent::__construct($client);
 
         $this->telegramUser = $telegramUser;
-        $this->entityManager = $entityManager;
+        $this->urlRepository = $urlRepository;
     }
 
     public function getName(): string
@@ -34,14 +35,14 @@ class SetUrlTelegramCommand extends BaseTelegramCommand implements TelegramComma
     {
         //@todo зарефакторить так как тут может вернуться null
         $user =  $this->telegramUser->find($data->getUserId());
-
+        dump($user);die;
         $url = new Url();
 //        потом мб придумаю как красиво сделать
 //        $url->setName();
         $url->setUrl($data->getDataCommand());
         $url->setUserId($user);
 
-        $this->entityManager->persist($url);
-        $this->entityManager->flush();
+        $this->urlRepository->add($url);
+
     }
 }
