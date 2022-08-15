@@ -33,16 +33,12 @@ class SetUrlTelegramCommand extends BaseTelegramCommand implements TelegramComma
 
     public function start(TelegramDTO $data):void
     {
-        //@todo зарефакторить так как тут может вернуться null
         $user =  $this->telegramUser->find($data->getUserId());
-        dump($user);die;
         $url = new Url();
-//        потом мб придумаю как красиво сделать
-//        $url->setName();
         $url->setUrl($data->getDataCommand());
         $url->setUserId($user);
 
-        $this->urlRepository->add($url);
+        $this->urlRepository->add($url, true);
 
     }
 }

@@ -7,17 +7,16 @@ namespace App\Services\telegram\Commands;
 use App\Entity\TelegramUser;
 use App\Repository\TelegramUserRepository;
 use App\Services\telegram\DTO\TelegramDTO;
+use App\Services\telegram\Services\TelegramUserService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class StartTelegramCommand implements TelegramCommandInterface
 {
-    private TelegramUserRepository $telegramUserRepository;
-    private EntityManagerInterface $entityManager;
+    private TelegramUserService $telegramUserService;
 
-    public function __construct(TelegramUserRepository $telegramUserRepository, EntityManagerInterface $entityManager)
+    public function __construct(TelegramUserService $telegramUserService)
     {
-        $this->telegramUserRepository = $telegramUserRepository;
-        $this->entityManager = $entityManager;
+        $this->telegramUserService = $telegramUserService;
     }
 
     public function getName(): string
@@ -27,16 +26,8 @@ class StartTelegramCommand implements TelegramCommandInterface
 
     public function start(TelegramDTO $data): void
     {
-        if (is_null($this->telegramUserRepository->find($data->getUserId()))) {
-            $user = new TelegramUser();
-            $user->setId($data->getUserId());
-            $user->setFirstName($data->getUserFirstName());
-            $user->setLastName($data->getUserLastName());
-            $user->setUsername($data->getUserName());
-
-            $this->entityManager->persist($user);
-            $this->entityManager->flush($user);
+        if (!$this->telegramUserService->checkingExistUser($data->getUserId())) {
+            $this->telegramUserService->createUser($data);
         }
     }
-
 }
