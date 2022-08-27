@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\UrlRepository;
+use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UrlRepository::class)]
-class Url
+#[ORM\Entity(repositoryClass: ArticleRepository::class)]
+class Article
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,9 +19,9 @@ class Url
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'urls')]
+    #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?TelegramUser $user_id = null;
+    private ?TelegramUser $user = null;
 
     public function getId(): ?int
     {
@@ -54,12 +54,12 @@ class Url
 
     public function getUserId(): TelegramUser
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(TelegramUser $user_id): self
+    public function setUserId(TelegramUser $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }

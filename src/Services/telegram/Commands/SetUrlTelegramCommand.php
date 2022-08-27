@@ -4,24 +4,18 @@ declare(strict_types=1);
 
 namespace App\Services\telegram\Commands;
 
-use App\Entity\Url;
+use App\Entity\Article;
 use App\Repository\TelegramUserRepository;
-use App\Repository\UrlRepository;
+use App\Repository\ArticleRepository;
 use App\Services\telegram\DTO\TelegramDTO;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Exception\ORMException;
-use GuzzleHttp\Client;
 
-class SetUrlTelegramCommand extends BaseTelegramCommand implements TelegramCommandInterface
+class SetUrlTelegramCommand implements TelegramCommandInterface
 {
     private TelegramUserRepository $telegramUser;
-    private UrlRepository $urlRepository;
+    private ArticleRepository $urlRepository;
 
-    public function __construct(Client $client, TelegramUserRepository $telegramUser, UrlRepository $urlRepository)
+    public function __construct(TelegramUserRepository $telegramUser, ArticleRepository $urlRepository)
     {
-        parent::__construct($client);
-
         $this->telegramUser = $telegramUser;
         $this->urlRepository = $urlRepository;
     }
@@ -34,7 +28,7 @@ class SetUrlTelegramCommand extends BaseTelegramCommand implements TelegramComma
     public function start(TelegramDTO $data):void
     {
         $user =  $this->telegramUser->find($data->getUserId());
-        $url = new Url();
+        $url = new Article();
         $url->setUrl($data->getDataCommand());
         $url->setUserId($user);
 

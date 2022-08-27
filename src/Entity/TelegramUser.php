@@ -23,7 +23,7 @@ class TelegramUser
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $username = null;
 
-    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Url::class)]
+    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Article::class)]
     private Collection $urls;
 
     public function __construct()
@@ -80,14 +80,14 @@ class TelegramUser
     }
 
     /**
-     * @return Collection<int, Url>
+     * @return Collection<int, Article>
      */
     public function getUrls(): Collection
     {
         return $this->urls;
     }
 
-    public function addUrl(Url $url): self
+    public function addUrl(Article $url): self
     {
         if (!$this->urls->contains($url)) {
             $this->urls->add($url);
@@ -97,7 +97,7 @@ class TelegramUser
         return $this;
     }
 
-    public function removeUrl(Url $url): self
+    public function removeUrl(Article $url): self
     {
         if ($this->urls->removeElement($url)) {
             // set the owning side to null (unless already changed)

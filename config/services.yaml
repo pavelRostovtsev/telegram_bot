@@ -36,12 +36,10 @@ services:
         class: GuzzleHttp\Client
         factory: ['@app.telegram.http_client_factory', 'createHttpClient']
 
-    App\Services\telegram\Commands\SetUrlTelegramCommand:
-        arguments:
-            $client: '@app.telegram.http_client'
-
-    App\Services\telegram\Commands\BaseTelegramCommand:
-        arguments:
-            $client: '@app.telegram.http_client'
+    App\Services\telegram\Commands\SetUrlTelegramCommand: ~
 
     App\Services\telegram\Commands\StartTelegramCommand: ~
+
+    App\Services\telegram\Services\TelegramApi:
+        arguments:
+            $httpClient: '@app.telegram.http_client'

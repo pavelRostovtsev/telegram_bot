@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Services\telegram\DTO\TelegramDTO;
 use App\Services\telegram\Exceptions\TelegramCommandNotFoundException;
 use App\Services\telegram\Services\CommandService;
+use App\Services\telegram\Services\TelegramApi;
 use App\Services\telegram\Services\TelegramUserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,11 +16,16 @@ class TelegramController extends AbstractController
 {
     private CommandService $commandService;
     private TelegramUserService $telegramUserService;
+    private TelegramApi $telegramApi;
 
-    public function __construct(CommandService $commandService, TelegramUserService $telegramUserService)
-    {
+    public function __construct(
+        CommandService $commandService,
+        TelegramUserService $telegramUserService,
+        TelegramApi $telegramApi
+    ) {
         $this->commandService = $commandService;
         $this->telegramUserService = $telegramUserService;
+        $this->telegramApi = $telegramApi;
     }
 
     #[Route('/webhook', name: 'app_webhook', methods: 'POST')]
@@ -35,7 +41,10 @@ class TelegramController extends AbstractController
             $command = $this->commandService->getCommand($data->getCommand());
 
         } catch (TelegramCommandNotFoundException) {
-            $this->commandService->sendMessageCommandNotFound($data->getUserId(), $data->getFullTextCommand());
+            $this->telegramApi->sendMessage(
+                $data->getUserId(),
+                'команда ' . $data->getFullTextCommand() . ' не найдена'
+            );
 
             return new JsonResponse(400);
         }

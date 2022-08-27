@@ -17,15 +17,13 @@ class CommandService
      * @var TelegramCommandInterface[]
      */
     private array $commands = [];
-    private BaseTelegramCommand $baseTelegramCommand;
     private LoggerInterface $logger;
 
     /**
      * @throws CommandAlreadyExistsException
      */
-    public function __construct(iterable $commands, BaseTelegramCommand $baseTelegramCommand, LoggerInterface $logger)
+    public function __construct(iterable $commands, LoggerInterface $logger)
     {
-        $this->baseTelegramCommand = $baseTelegramCommand;
         $this->logger = $logger;
         foreach ($commands as $command)
         {
@@ -63,15 +61,5 @@ class CommandService
     private function has(string $name): bool
     {
         return array_key_exists($name, $this->commands);
-    }
-
-
-    public function sendMessageCommandNotFound(int $id, string $command): void
-    {
-        try {
-            $this->baseTelegramCommand->sendMessage('command ' . $command . ' not found', $id);
-        } catch (GuzzleException $exception) {
-            $this->logger->error($exception->getMessage(), $exception->getTrace());
-        }
     }
 }
