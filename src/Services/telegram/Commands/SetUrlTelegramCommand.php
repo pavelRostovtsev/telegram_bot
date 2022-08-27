@@ -22,7 +22,7 @@ class SetUrlTelegramCommand implements TelegramCommandInterface
 
     public function getName(): string
     {
-        return '/set';
+        return '/send';
     }
 
     public function start(TelegramDTO $data):void
@@ -31,7 +31,7 @@ class SetUrlTelegramCommand implements TelegramCommandInterface
         $url = new Article();
         $url->setUrl($data->getDataCommand());
         $url->setUserId($user);
-
+        
         $this->urlRepository->add($url, true);
 
     }
