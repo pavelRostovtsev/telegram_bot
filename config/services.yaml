@@ -43,3 +43,13 @@ services:
     App\Services\telegram\Services\TelegramApi:
         arguments:
             $httpClient: '@app.telegram.http_client'
+
+    App\Command\TelegramSetWebhookCommand:
+        arguments:
+            $httpClient: '@app.telegram.http_client'
+
+    App\Command\TelegramWebhookInfoCommand:
+        arguments:
+            $httpClient: '@app.telegram.http_client'
+
+

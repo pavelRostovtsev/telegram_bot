@@ -7,6 +7,7 @@ use App\Services\telegram\Exceptions\TelegramCommandNotFoundException;
 use App\Services\telegram\Services\CommandService;
 use App\Services\telegram\Services\TelegramApi;
 use App\Services\telegram\Services\TelegramUserService;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,20 +37,22 @@ class TelegramController extends AbstractController
         if (!$this->telegramUserService->checkingExistUser($data->getUserId())) {
             $this->telegramUserService->createUser($data);
         }
-
+        //@todo нужно в отдельный сервис вынести
         try {
             $command = $this->commandService->getCommand($data->getCommand());
-
+            $command->start($data);
         } catch (TelegramCommandNotFoundException) {
             $this->telegramApi->sendMessage(
                 $data->getUserId(),
                 'команда ' . $data->getFullTextCommand() . ' не найдена'
             );
 
-            return new JsonResponse(400);
+        } catch (Exception) {
+            $this->telegramApi->sendMessage(
+                $data->getUserId(),
+                'что-то пошло не так'
+            );
         }
-
-        $command->start($data);
 
         return new JsonResponse();
     }
