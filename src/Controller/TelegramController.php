@@ -38,30 +38,30 @@ class TelegramController extends AbstractController
             '1234'
         );
         return new JsonResponse();
-        if (!$this->telegramUserService->checkingExistUser($data->getUserId())) {
-            $this->telegramUserService->createUser($data);
-        }
-        //@todo нужно в отдельный сервис вынести
-        $responseData = '';
-
-        try {
-            $command = $this->commandService->getCommand($data->getCommand());
-            $command->start($data);
-        } catch (TelegramCommandNotFoundException) {
-            $responseData = 'command ' . $data->getFullTextCommand() . ' not found';
-
-            $this->telegramApi->sendMessage(
-                $data->getUserId(),
-                $responseData
-            );
-        } catch (Exception) {
-            $this->telegramApi->sendMessage(
-                $data->getUserId(),
-                'что-то пошло не так'
-            );
-        }
-
-        return new JsonResponse($responseData);
+//        if (!$this->telegramUserService->checkingExistUser($data->getUserId())) {
+//            $this->telegramUserService->createUser($data);
+//        }
+//        //@todo нужно в отдельный сервис вынести
+//        $responseData = '';
+//
+//        try {
+//            $command = $this->commandService->getCommand($data->getCommand());
+//            $command->start($data);
+//        } catch (TelegramCommandNotFoundException) {
+//            $responseData = 'command ' . $data->getFullTextCommand() . ' not found';
+//
+//            $this->telegramApi->sendMessage(
+//                $data->getUserId(),
+//                $responseData
+//            );
+//        } catch (Exception) {
+//            $this->telegramApi->sendMessage(
+//                $data->getUserId(),
+//                'что-то пошло не так'
+//            );
+//        }
+//
+//        return new JsonResponse($responseData);
     }
 
     #[Route('/test', name: 'app_test')]
