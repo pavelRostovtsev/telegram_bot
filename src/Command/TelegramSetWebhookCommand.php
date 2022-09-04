@@ -33,7 +33,6 @@ class TelegramSetWebhookCommand extends Command
     {
         $this
             ->addArgument('webhookUri', description:'the url that your handler for web hooks is bound to')
-            ->addOption('setStatus', 's', mode: InputOption::VALUE_OPTIONAL, default: true)
         ;
     }
 
@@ -45,13 +44,6 @@ class TelegramSetWebhookCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $webhookUri= $input->getArgument('webhookUri');
-        $setStatus =  $input->getOption('setStatus');
-
-
-        if (!$webhookUri || $setStatus !== true) {
-            $io->error('webhook is not specified');
-            return Command::FAILURE;
-        }
 
         $response = $this->httpClient
             ->post('setWebhook?url=' . $webhookUri)
