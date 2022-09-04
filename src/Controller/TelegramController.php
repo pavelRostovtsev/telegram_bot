@@ -38,15 +38,18 @@ class TelegramController extends AbstractController
             $this->telegramUserService->createUser($data);
         }
         //@todo нужно в отдельный сервис вынести
+        $responseData = '';
+
         try {
             $command = $this->commandService->getCommand($data->getCommand());
             $command->start($data);
         } catch (TelegramCommandNotFoundException) {
+            $responseData = 'command ' . $data->getFullTextCommand() . ' not found';
+
             $this->telegramApi->sendMessage(
                 $data->getUserId(),
-                'команда ' . $data->getFullTextCommand() . ' не найдена'
+                $responseData
             );
-
         } catch (Exception) {
             $this->telegramApi->sendMessage(
                 $data->getUserId(),
@@ -54,7 +57,7 @@ class TelegramController extends AbstractController
             );
         }
 
-        return new JsonResponse();
+        return new JsonResponse($responseData);
     }
 
     #[Route('/test', name: 'app_test')]

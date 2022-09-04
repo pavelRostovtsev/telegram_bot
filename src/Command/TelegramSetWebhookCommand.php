@@ -48,7 +48,7 @@ class TelegramSetWebhookCommand extends Command
         $setStatus =  $input->getOption('setStatus');
 
 
-        if (!$webhookUri && $setStatus === true) {
+        if (!$webhookUri || $setStatus !== true) {
             $io->error('webhook is not specified');
             return Command::FAILURE;
         }

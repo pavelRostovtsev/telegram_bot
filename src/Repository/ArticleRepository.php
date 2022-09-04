@@ -53,7 +53,8 @@ class ArticleRepository extends ServiceEntityRepository
         ;
 
         $randomRecord = $ids[array_rand($ids, 1)];
-        $this->remove($randomRecord);
+        $this->remove($randomRecord, true);
+
         return $randomRecord->getUrl();
     }
 

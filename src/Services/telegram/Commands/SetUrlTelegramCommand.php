@@ -22,7 +22,7 @@ class SetUrlTelegramCommand implements TelegramCommandInterface
 
     public function getName(): string
     {
-        return '/send';
+        return '/set';
     }
 
     public function start(TelegramDTO $data):void

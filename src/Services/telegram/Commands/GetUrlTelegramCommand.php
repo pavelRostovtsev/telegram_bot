@@ -6,15 +6,19 @@ namespace App\Services\telegram\Commands;
 
 use App\Repository\ArticleRepository;
 use App\Services\telegram\DTO\TelegramDTO;
+use App\Services\telegram\Services\TelegramApi;
+use GuzzleHttp\Exception\GuzzleException;
 
 class GetUrlTelegramCommand implements TelegramCommandInterface
 {
 
     private ArticleRepository $urlRepository;
+    private TelegramApi $telegramApi;
 
-    public function __construct(ArticleRepository $urlRepository)
+    public function __construct(ArticleRepository $urlRepository, TelegramApi $telegramApi)
     {
         $this->urlRepository = $urlRepository;
+        $this->telegramApi = $telegramApi;
     }
 
     public function getName(): string
@@ -22,9 +26,12 @@ class GetUrlTelegramCommand implements TelegramCommandInterface
         return '/get';
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function start(TelegramDTO $data): void
     {
-        $this->urlRepository->getRandomUrl($data->getUserId());
-
+        $article = $this->urlRepository->getRandomUrl($data->getUserId());
+        $this->telegramApi->sendMessage(chatId:$data->getUserId(), text: $article);
     }
 }
