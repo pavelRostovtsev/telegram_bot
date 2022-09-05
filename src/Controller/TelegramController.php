@@ -34,9 +34,9 @@ class TelegramController extends AbstractController
     {
         $data = new TelegramDTO($request);
 
-        if (!$this->telegramUserService->checkingExistUser($data->getUserId())) {
-            $this->telegramUserService->createUser($data);
-        }
+//        if (!$this->telegramUserService->checkingExistUser($data->getUserId())) {
+//            $this->telegramUserService->createUser($data);
+//        }
         //@todo нужно в отдельный сервис вынести
         $responseData = '';
         $this->telegramApi->sendMessage(
