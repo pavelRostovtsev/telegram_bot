@@ -35,8 +35,9 @@ class TelegramController extends AbstractController
         $data = new TelegramDTO($request);
         $this->telegramApi->sendMessage(
             $data->getUserId(),
-            $data->getCommand()
-        );return new JsonResponse();
+            1234
+        );
+        return new JsonResponse();
 //        if (!$this->telegramUserService->checkingExistUser($data->getUserId())) {
 //            $this->telegramUserService->createUser($data);
 //        }
