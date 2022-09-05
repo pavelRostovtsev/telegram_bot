@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Psr\Http\Client\ClientInterface;
 
 #[AsCommand(
-    name: 'app:telegram:set-webhook',
+    name: 'telegram:set-webhook',
     description: 'registers a webhook',
 )]
 class TelegramSetWebhookCommand extends Command

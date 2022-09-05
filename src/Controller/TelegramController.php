@@ -33,7 +33,10 @@ class TelegramController extends AbstractController
     public function webhookAction(Request $request): JsonResponse
     {
         $data = new TelegramDTO($request);
-
+        $this->telegramApi->sendMessage(
+            $data->getUserId(),
+            $data->getCommand()
+        );
         if (!$this->telegramUserService->checkingExistUser($data->getUserId())) {
             $this->telegramUserService->createUser($data);
         }
@@ -57,7 +60,7 @@ class TelegramController extends AbstractController
             );
         }
 
-        return new JsonResponse($responseData);
+        return new JsonResponse($responseData ?: null);
     }
 
     #[Route('/test', name: 'app_test')]
