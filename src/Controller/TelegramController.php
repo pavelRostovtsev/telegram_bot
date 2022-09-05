@@ -39,11 +39,7 @@ class TelegramController extends AbstractController
 //        }
         //@todo нужно в отдельный сервис вынести
         $responseData = '';
-        $this->telegramApi->sendMessage(
-            $data->getUserId(),
-            $data->getCommand()
-        );
-        return new JsonResponse();
+
         try {
             $command = $this->commandService->getCommand($data->getCommand());
             $command->start($data);
