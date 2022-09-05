@@ -32,6 +32,7 @@ class GetUrlTelegramCommand implements TelegramCommandInterface
     public function start(TelegramDTO $data): void
     {
         $article = $this->urlRepository->getRandomUrl($data->getUserId());
-        $this->telegramApi->sendMessage(chatId:$data->getUserId(), text: $article);
+        $responseText = $article ?: 'the vault is empty';
+        $this->telegramApi->sendMessage(chatId:$data->getUserId(), text: $responseText);
     }
 }

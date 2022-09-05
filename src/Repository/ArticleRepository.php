@@ -51,7 +51,9 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
-
+        if (!$ids) {
+            return '';
+        }
         $randomRecord = $ids[array_rand($ids, 1)];
         $this->remove($randomRecord, true);
 

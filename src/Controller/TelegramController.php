@@ -33,35 +33,31 @@ class TelegramController extends AbstractController
     public function webhookAction(Request $request): JsonResponse
     {
         $data = new TelegramDTO($request);
-        $this->telegramApi->sendMessage(
-            $data->getUserId(),
-            $data->getCommand()
-        );
-        return new JsonResponse();
-//        if (!$this->telegramUserService->checkingExistUser($data->getUserId())) {
-//            $this->telegramUserService->createUser($data);
-//        }
-//        //@todo нужно в отдельный сервис вынести
-//        $responseData = '';
-//
-//        try {
-//            $command = $this->commandService->getCommand($data->getCommand());
-//            $command->start($data);
-//        } catch (TelegramCommandNotFoundException) {
-//            $responseData = 'command ' . $data->getFullTextCommand() . ' not found';
-//
-//            $this->telegramApi->sendMessage(
-//                $data->getUserId(),
-//                $responseData
-//            );
-//        } catch (Exception) {
-//            $this->telegramApi->sendMessage(
-//                $data->getUserId(),
-//                'что-то пошло не так'
-//            );
-//        }
-//
-//        return new JsonResponse($responseData ?: null);
+
+        if (!$this->telegramUserService->checkingExistUser($data->getUserId())) {
+            $this->telegramUserService->createUser($data);
+        }
+        //@todo нужно в отдельный сервис вынести
+        $responseData = '';
+
+        try {
+            $command = $this->commandService->getCommand($data->getCommand());
+            $command->start($data);
+        } catch (TelegramCommandNotFoundException) {
+            $responseData = 'command ' . $data->getFullTextCommand() . ' not found';
+
+            $this->telegramApi->sendMessage(
+                $data->getUserId(),
+                $responseData
+            );
+        } catch (Exception) {
+            $this->telegramApi->sendMessage(
+                $data->getUserId(),
+                'что-то пошло не так'
+            );
+        }
+
+        return new JsonResponse($responseData ?: null);
     }
 
     #[Route('/test', name: 'app_test')]
