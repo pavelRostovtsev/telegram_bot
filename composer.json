@@ -20,7 +20,8 @@
         "symfony/monolog-bundle": "^3.8",
         "symfony/proxy-manager-bridge": "5.4.*",
         "symfony/runtime": "5.4.*",
-        "symfony/yaml": "5.4.*"
+        "symfony/yaml": "5.4.*",
+      "ext-redis": "*"
     },
     "config": {
         "allow-plugins": {

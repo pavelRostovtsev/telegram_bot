@@ -8,6 +8,8 @@ use App\Services\telegram\Services\CommandService;
 use App\Services\telegram\Services\TelegramApi;
 use App\Services\telegram\Services\TelegramUserService;
 use Exception;
+use Redis;
+use RedisException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,15 +20,19 @@ class TelegramController extends AbstractController
     private CommandService $commandService;
     private TelegramUserService $telegramUserService;
     private TelegramApi $telegramApi;
+    private Redis $redis;
 
     public function __construct(
         CommandService $commandService,
         TelegramUserService $telegramUserService,
-        TelegramApi $telegramApi
+        TelegramApi $telegramApi,
+        Redis $redis
+
     ) {
         $this->commandService = $commandService;
         $this->telegramUserService = $telegramUserService;
         $this->telegramApi = $telegramApi;
+        $this->redis = $redis;
     }
 
     #[Route('/webhook', name: 'app_webhook', methods: 'POST')]
@@ -64,5 +70,16 @@ class TelegramController extends AbstractController
     public function test(): JsonResponse
     {
         return $this->json('Maks ruina');
+    }
+
+    /**
+     * @throws RedisException
+     */
+    #[Route('/abracadabra', name:'app_abracadabra')]
+    public function abracadabra(): JsonResponse
+    {
+        $this->redis->hSet('id:12345', 'test', json_encode([1, 2, 3, 4], JSON_THROW_ON_ERROR));
+        dump(json_decode($this->redis->hGet('id:12345', 'test')));
+        die;
     }
 }

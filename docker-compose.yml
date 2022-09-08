@@ -12,6 +12,11 @@ services:
     tty: true
     volumes:
       - .:/var/www
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - telegram_bot
 
 #порты определяются в docker-compose.override
   nginx:
@@ -27,6 +32,8 @@ services:
       - ./docker-files/nginx/privkey.pem:/etc/nginx/privkey.pem
     depends_on:
       - php-fpm
+    networks:
+      - telegram_bot
 
   postgres:
     image: postgres:9.6-alpine
@@ -37,3 +44,14 @@ services:
       POSTGRES_DB: telegram_db
     ports:
       - '5432:5432'
+    networks:
+      - telegram_bot
+
+  redis:
+    image: redis:7.0.4
+    networks:
+      - telegram_bot
+networks:
+  telegram_bot:
+    external:
+      name: telegram_bot

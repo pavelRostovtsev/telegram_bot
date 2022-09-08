@@ -8,6 +8,20 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
 {
+    private const READING_STATUS_NOT_READ = 0;
+    private const READING_STATUS_READ = 1;
+    private const  READING_STATUS = [
+        self::READING_STATUS_NOT_READ,
+        self::READING_STATUS_READ,
+    ];
+
+    private const DELETION_REQUEST_TRUE = true;
+    private const DELETION_REQUEST_FALSE = false;
+    private const DELETION_REQUEST_STATUS = [
+      self::DELETION_REQUEST_FALSE,
+      self::DELETION_REQUEST_TRUE,
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

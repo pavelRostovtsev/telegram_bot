@@ -20,7 +20,7 @@ RUN set -xe \
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
 RUN set -xe \
-    && install-php-extensions pdo_pgsql
+    && install-php-extensions pdo_pgsql redis
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
