@@ -37,6 +37,12 @@ class Article
     #[ORM\JoinColumn(nullable: false)]
     private ?TelegramUser $user = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $readingStatus = false;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $deletionRequestStatus = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +80,30 @@ class Article
     public function setUserId(TelegramUser $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function isReadingStatus(): ?bool
+    {
+        return $this->readingStatus;
+    }
+
+    public function setReadingStatus(bool $readingStatus): self
+    {
+        $this->readingStatus = $readingStatus;
+
+        return $this;
+    }
+
+    public function isDeletionRequestStatus(): ?bool
+    {
+        return $this->deletionRequestStatus;
+    }
+
+    public function setDeletionRequestStatus(bool $deletionRequestStatus): self
+    {
+        $this->deletionRequestStatus = $deletionRequestStatus;
 
         return $this;
     }

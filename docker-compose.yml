@@ -42,8 +42,6 @@ services:
       POSTGRES_USER: db_user
       POSTGRES_PASSWORD: db_password
       POSTGRES_DB: telegram_db
-    ports:
-      - '5432:5432'
     volumes:
       - .:/var/lib/postgresql/data
     networks:
