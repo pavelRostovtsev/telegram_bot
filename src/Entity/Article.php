@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
@@ -42,6 +44,14 @@ class Article
 
     #[ORM\Column(nullable: true)]
     private ?bool $deletionRequestStatus = false;
+
+    #[ORM\ManyToMany(targetEntity: ArticleTags::class, inversedBy: 'articles')]
+    private Collection $articleTags;
+
+    public function __construct()
+    {
+        $this->articleTags = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +114,30 @@ class Article
     public function setDeletionRequestStatus(bool $deletionRequestStatus): self
     {
         $this->deletionRequestStatus = $deletionRequestStatus;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ArticleTags>
+     */
+    public function getArticleTags(): Collection
+    {
+        return $this->articleTags;
+    }
+
+    public function addArticleTag(ArticleTags $articleTag): self
+    {
+        if (!$this->articleTags->contains($articleTag)) {
+            $this->articleTags->add($articleTag);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleTag(ArticleTags $articleTag): self
+    {
+        $this->articleTags->removeElement($articleTag);
 
         return $this;
     }
