@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Services\telegram\Services;
+namespace App\Models\telegram\Services;
 
 use App\Entity\TelegramUser;
 use App\Repository\TelegramUserRepository;
-use App\Services\telegram\DTO\TelegramDTO;
+use App\Models\telegram\DTO\TelegramDTO;
 
 class TelegramUserService
 {

@@ -2,17 +2,32 @@
 
 declare(strict_types=1);
 
-namespace App\Services\telegram\Commands;
+namespace App\Models\telegram\Commands;
 
 use App\Entity\Article;
 use App\Repository\TelegramUserRepository;
 use App\Repository\ArticleRepository;
-use App\Services\telegram\DTO\TelegramDTO;
+use App\Models\telegram\DTO\TelegramDTO;
 
 class SetUrlTelegramCommand implements TelegramCommandInterface
 {
+    private const STATE_START = 0;
+    private const STATE_IN_PROCESS = 1;
+    private const STATE_END = 2;
+
+    private const STATE = [
+        self::STATE_START,
+        self::STATE_IN_PROCESS,
+        self::STATE_END,
+    ];
+
     private TelegramUserRepository $telegramUser;
     private ArticleRepository $urlRepository;
+
+    private string $link;
+    private string|null $name = null;
+    private array $tags = [];
+    private int $currentState;
 
     public function __construct(TelegramUserRepository $telegramUser, ArticleRepository $urlRepository)
     {
@@ -33,6 +48,5 @@ class SetUrlTelegramCommand implements TelegramCommandInterface
         $url->setUserId($user);
         
         $this->urlRepository->add($url, true);
-
     }
 }

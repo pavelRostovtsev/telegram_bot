@@ -2,8 +2,8 @@
 
 namespace App\Tests\telegram;
 
-use App\Services\telegram\Exceptions\CommandAlreadyExistsException;
-use App\Services\telegram\Services\CommandService;
+use App\Models\telegram\Exceptions\CommandAlreadyExistsException;
+use App\Models\telegram\Services\CommandService;
 use App\Tests\telegram\mock\TelegramCommandMock;
 use PHPUnit\Framework\TestCase;
 

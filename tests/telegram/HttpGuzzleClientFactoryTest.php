@@ -2,7 +2,7 @@
 
 namespace App\Tests\telegram;
 
-use App\Services\telegram\Factory\HttpClientFactoryTelegram;
+use App\Models\telegram\Factory\HttpClientFactoryTelegram;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;

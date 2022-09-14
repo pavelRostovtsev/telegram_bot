@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Services\telegram\Commands;
+namespace App\Models\telegram\Commands;
 
 use App\Entity\TelegramUser;
 use App\Repository\TelegramUserRepository;
-use App\Services\telegram\DTO\TelegramDTO;
-use App\Services\telegram\Services\TelegramUserService;
+use App\Models\telegram\DTO\TelegramDTO;
+use App\Models\telegram\Services\TelegramUserService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class StartTelegramCommand implements TelegramCommandInterface

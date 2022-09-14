@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Services\telegram\Services;
+namespace App\Models\telegram\Services;
 
-use App\Services\telegram\Commands\BaseTelegramCommand;
-use App\Services\telegram\Commands\TelegramCommandInterface;
-use App\Services\telegram\Exceptions\CommandAlreadyExistsException;
-use App\Services\telegram\Exceptions\TelegramCommandNotFoundException;
+use App\Models\telegram\Commands\BaseTelegramCommand;
+use App\Models\telegram\Commands\TelegramCommandInterface;
+use App\Models\telegram\Exceptions\CommandAlreadyExistsException;
+use App\Models\telegram\Exceptions\TelegramCommandNotFoundException;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 

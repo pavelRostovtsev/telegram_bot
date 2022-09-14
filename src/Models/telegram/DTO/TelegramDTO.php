@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\telegram\DTO;
+namespace App\Models\telegram\DTO;
 
 use Symfony\Component\HttpFoundation\Request;
 

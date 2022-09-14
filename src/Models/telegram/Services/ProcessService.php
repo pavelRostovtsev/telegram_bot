@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Services\telegram\Services;
+namespace App\Models\telegram\Services;
 
-use App\Services\telegram\Storage\StorageInterface;
+use App\Models\telegram\Storage\StorageInterface;
 use Redis;
 use RedisException;
 

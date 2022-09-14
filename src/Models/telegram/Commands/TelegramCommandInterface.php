@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\telegram\Commands;
+namespace App\Models\telegram\Commands;
 
-use App\Services\telegram\DTO\TelegramDTO;
+use App\Models\telegram\DTO\TelegramDTO;
 
 interface TelegramCommandInterface
 {

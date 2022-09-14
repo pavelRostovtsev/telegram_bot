@@ -14,7 +14,7 @@ services:
             - '../src/Kernel.php'
 
     _instanceof:
-        App\Services\telegram\Commands\TelegramCommandInterface:
+        App\Models\telegram\Commands\TelegramCommandInterface:
             tags: [ 'app.telegram.commands' ]
 
     Redis:
@@ -25,7 +25,7 @@ services:
                 - '%env(int:REDIS_PORT)%'
 
     app.telegram.commands.service:
-        class: App\Services\telegram\Services\CommandService
+        class: App\Models\telegram\Services\CommandService
         arguments:
             $commands: !tagged_iterator app.telegram.commands
 
@@ -34,7 +34,7 @@ services:
             $commandService: '@app.telegram.commands.service'
 
     app.telegram.http_client_factory:
-        class: App\Services\telegram\Factory\HttpClientFactoryTelegram
+        class: App\Models\telegram\Factory\HttpClientFactoryTelegram
         arguments:
             $token: '%env(TELEGRAM_TOKEN)%'
             $telegramUrl: '%env(TELEGRAM_URL)%'
@@ -43,11 +43,11 @@ services:
         class: GuzzleHttp\Client
         factory: ['@app.telegram.http_client_factory', 'createHttpClient']
 
-    App\Services\telegram\Commands\SetUrlTelegramCommand: ~
+    App\Models\telegram\Commands\SetUrlTelegramCommand: ~
 
-    App\Services\telegram\Commands\StartTelegramCommand: ~
+    App\Models\telegram\Commands\StartTelegramCommand: ~
 
-    App\Services\telegram\Services\TelegramApi:
+    App\Models\telegram\Services\TelegramApi:
         arguments:
             $httpClient: '@app.telegram.http_client'
 
@@ -59,6 +59,6 @@ services:
         arguments:
             $httpClient: '@app.telegram.http_client'
 
-    App\Services\telegram\Storage\RedisStorage:
+    App\Models\telegram\Storage\RedisStorage:
         arguments:
             $redis: '@Redis'

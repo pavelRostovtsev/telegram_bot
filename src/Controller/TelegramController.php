@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Services\telegram\DTO\TelegramDTO;
-use App\Services\telegram\Exceptions\TelegramCommandNotFoundException;
-use App\Services\telegram\Services\CommandService;
-use App\Services\telegram\Services\ProcessService;
-use App\Services\telegram\Services\TelegramApi;
-use App\Services\telegram\Services\TelegramUserService;
+use App\Models\telegram\DTO\TelegramDTO;
+use App\Models\telegram\Exceptions\TelegramCommandNotFoundException;
+use App\Models\telegram\Services\CommandService;
+use App\Models\telegram\Services\ProcessService;
+use App\Models\telegram\Services\TelegramApi;
+use App\Models\telegram\Services\TelegramUserService;
 use Exception;
 use RedisException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -72,8 +72,14 @@ class TelegramController extends AbstractController
     }
 
     #[Route('/abracadabra', name:'app_abracadabra')]
-    public function abracadabra(): JsonResponse
+    public function abracadabra(Request $request): JsonResponse
     {
-        dd(1);die;
+        $data = new TelegramDTO($request);
+
+        if ($this->processService->checkProcess($data->getUserId())) {
+
+        } else {
+
+        }
     }
 }

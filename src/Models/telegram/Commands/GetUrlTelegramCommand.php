@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Services\telegram\Commands;
+namespace App\Models\telegram\Commands;
 
 use App\Repository\ArticleRepository;
-use App\Services\telegram\DTO\TelegramDTO;
-use App\Services\telegram\Services\TelegramApi;
+use App\Models\telegram\DTO\TelegramDTO;
+use App\Models\telegram\Services\TelegramApi;
 use GuzzleHttp\Exception\GuzzleException;
 
 class GetUrlTelegramCommand implements TelegramCommandInterface

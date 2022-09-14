@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\telegram\Services;
+namespace App\Models\telegram\Services;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Client\ClientInterface;
